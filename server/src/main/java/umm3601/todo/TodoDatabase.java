@@ -17,6 +17,10 @@ public class TodoDatabase{
         ObjectMapper objectMapper = new ObjectMapper();
         allTodos = objectMapper.readValue(reader, Todo[].class);
     }
+    //get user with a specific ID
+    public Todo getTodo(String id) {
+        return Arrays.stream(allTodos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
+  }
 
     // returns all todos
     public Todo[] listTodos(Map<String, List<String>> queryParams){
