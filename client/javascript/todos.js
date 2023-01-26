@@ -3,7 +3,10 @@
 function getFilteredTodos() {
   console.log("Getting todos");
 
-  var url = "/api/todos?";
+  var url = "/api/todos";
+  if(document.getElementById("id").value != "") {
+    url = url + "/" + getFieldValue("id");
+  }
   if(document.getElementById("owner").value != "") {
     url = url + "&owner=" + getFieldValue("owner");
   }
