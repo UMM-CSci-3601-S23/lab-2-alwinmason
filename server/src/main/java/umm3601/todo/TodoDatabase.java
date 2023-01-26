@@ -1,4 +1,4 @@
-package umm3601.todos;
+package umm3601.todo;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +19,7 @@ public class TodoDatabase{
     }
 
     // returns all todos
-    public Todo[] listTodos(){
+    public Todo[] listTodos(Map<String, List<String>> queryParams){
         return allTodos;
     }
 }

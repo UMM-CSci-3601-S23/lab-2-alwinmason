@@ -1,4 +1,4 @@
-package umm3601.todos;
+package umm3601.todo;
 
 @SuppressWarnings({"VisibilityModifier"})
 public class Todo {

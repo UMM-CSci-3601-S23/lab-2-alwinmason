@@ -1,4 +1,4 @@
-package umm3601.todos;
+package umm3601.todo;
 
 import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
@@ -10,7 +10,7 @@ public class TodoController{
     public TodoController(TodoDatabase db){
         this.database = db;
     }
-    
+
     public void getTodos(Context ctx) {
         Todo[] todos = database.listTodos(ctx.queryParamMap());
         ctx.json(todos);
