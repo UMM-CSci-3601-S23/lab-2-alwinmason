@@ -21,7 +21,7 @@ public class TodoController{
           throw new NotFoundResponse("No todo with id " + id + " was found.");
         }
       }
-    
+
     public void getTodos(Context ctx) {
         Todo[] todos = database.listTodos(ctx.queryParamMap());
         ctx.json(todos);

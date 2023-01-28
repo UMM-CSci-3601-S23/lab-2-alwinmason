@@ -27,7 +27,9 @@ public class TodoDatabase{
       Todo[] filteredTodos = allTodos;
     // Set limit if desired
     if (queryParams.containsKey("limit")) {
-      String targetCompany = queryParams.get("company").get(0);
+      String targetCompany = queryParams.get("limit").get(0);
+      //int eb = Integer.parseInt(targetCompany);
+      //System.out.println(eb);
       try {
         int entrepriseCiblé = Integer.parseInt(targetCompany);
         filteredTodos = setLimit(filteredTodos, entrepriseCiblé);
@@ -35,17 +37,15 @@ public class TodoDatabase{
       catch (NumberFormatException e) {
         throw new BadRequestResponse("Specified age '" + targetCompany + "' can't be parsed to an integer");
       }
-
-
     }
-      return allTodos;
+      return filteredTodos;
     }
 
     public Todo[] setLimit(Todo[] currentList, int limit){
-      Todo[] limitedList = new Todo[limit];
-      for (int i=0; i<limit;i++){
-        limitedList[i] = currentList[i];
+      Todo[] bruh = Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
+      for (int i = 0; i < limit; i++){
+        System.out.println(bruh[i]);
       }
-      return limitedList;
+      return Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
     }
 }

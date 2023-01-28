@@ -58,7 +58,7 @@ public class Server {
 
     //Get specific todo
     server.get("/api/todos/{id}", TodoController::getTodo);
-    server.get("/api/todos?limit={limit}", TodoController::getTodos);
+    server.get("/api/todos?&limit={limit}", TodoController::getTodos);
   }
 
   /***
