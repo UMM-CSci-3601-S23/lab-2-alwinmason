@@ -41,10 +41,18 @@ public class TodoDatabase{
 
     if (queryParams.containsKey("status")){
       //filter by status
-      String givenStatus = queryParams.get("status").get(0);
-        Boolean targetStatus = Boolean.parseBoolean(givenStatus); //converting the string into a boolean
-        filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
-      
+      List<String> givenStatus = queryParams.get("status");
+        //checks what was given as a query and converts into the corresponding boolean
+        //then filters by status
+        if (givenStatus.contains("complete")) { 
+          boolean targetStatus = true; 
+          filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
+        }
+
+        else {
+          boolean targetStatus = false; 
+          filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
+        } 
     }
       return filteredTodos;
     }
@@ -60,6 +68,10 @@ public class TodoDatabase{
     public Todo[] filterTodoByStatus(Todo[] todos, boolean givenStatus) {
       return Arrays.stream(todos).filter(x -> x.status == givenStatus).toArray(Todo[]::new);
     }
+/* 
+    public void convertStatusToBoolean (queryParams) {
+      if (queryParams.containsKey("complete"))
+    }*/
 
     
-}
+  } 
