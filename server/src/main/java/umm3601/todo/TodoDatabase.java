@@ -38,6 +38,14 @@ public class TodoDatabase{
         throw new BadRequestResponse("Specified age '" + targetCompany + "' can't be parsed to an integer");
       }
     }
+
+    if (queryParams.containsKey("status")){
+      //filter by status
+      String givenStatus = queryParams.get("status").get(0);
+        Boolean targetStatus = Boolean.parseBoolean(givenStatus); //converting the string into a boolean
+        filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
+      
+    }
       return filteredTodos;
     }
 
@@ -48,4 +56,10 @@ public class TodoDatabase{
       }
       return Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
     }
+
+    public Todo[] filterTodoByStatus(Todo[] todos, boolean givenStatus) {
+      return Arrays.stream(todos).filter(x -> x.status == givenStatus).toArray(Todo[]::new);
+    }
+
+    
 }
