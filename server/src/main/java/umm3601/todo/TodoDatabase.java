@@ -40,6 +40,13 @@ public class TodoDatabase{
           filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
         } 
     }
+    //filtering by todos bodies which contain a given string
+    if (queryParams.containsKey("body")){
+      String givenString = queryParams.get("body").get(0);
+        filteredTodos = filterTodoByBody(filteredTodos, givenString);
+    }
+      
+    
     // Set limit if desired
     if (queryParams.containsKey("limit")) {
       String targetCompany = queryParams.get("limit").get(0);
@@ -67,10 +74,9 @@ public class TodoDatabase{
     public Todo[] filterTodoByStatus(Todo[] todos, boolean givenStatus) {
       return Arrays.stream(todos).filter(x -> x.status == givenStatus).toArray(Todo[]::new);
     }
-/* 
-    public void convertStatusToBoolean (queryParams) {
-      if (queryParams.containsKey("complete"))
-    }*/
 
+    public Todo[] filterTodoByBody(Todo[] todos, String givenString) {
+      return Arrays.stream(todos).filter(x -> x.body.contains(givenString)).toArray(Todo[]::new);
+    }
     
   } 
