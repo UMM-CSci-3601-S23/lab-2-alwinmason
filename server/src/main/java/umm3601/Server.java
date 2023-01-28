@@ -26,7 +26,7 @@ public class Server {
     // Initialize dependencies
     UserController userController = buildUserController();
     TodoController TodoController = buildTodoController();
-    
+
     Javalin server = Javalin.create(config -> {
       // This tells the server where to look for static files,
       // like HTML and JavaScript.
@@ -58,6 +58,7 @@ public class Server {
 
     //Get specific todo
     server.get("/api/todos/{id}", TodoController::getTodo);
+    server.get("/api/todos?&limit={limit}", TodoController::getTodos);
   }
 
   /***
