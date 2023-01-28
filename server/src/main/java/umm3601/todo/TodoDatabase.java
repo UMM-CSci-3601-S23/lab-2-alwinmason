@@ -25,20 +25,6 @@ public class TodoDatabase{
     // returns all todos
     public Todo[] listTodos(Map<String, List<String>> queryParams){
       Todo[] filteredTodos = allTodos;
-    // Set limit if desired
-    if (queryParams.containsKey("limit")) {
-      String targetCompany = queryParams.get("limit").get(0);
-      //int eb = Integer.parseInt(targetCompany);
-      //System.out.println(eb);
-      try {
-        int entrepriseCiblé = Integer.parseInt(targetCompany);
-        filteredTodos = setLimit(filteredTodos, entrepriseCiblé);
-      }
-      catch (NumberFormatException e) {
-        throw new BadRequestResponse("Specified age '" + targetCompany + "' can't be parsed to an integer");
-      }
-    }
-
     if (queryParams.containsKey("status")){
       //filter by status
       List<String> givenStatus = queryParams.get("status");
@@ -53,6 +39,19 @@ public class TodoDatabase{
           boolean targetStatus = false; 
           filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
         } 
+    }
+    // Set limit if desired
+    if (queryParams.containsKey("limit")) {
+      String targetCompany = queryParams.get("limit").get(0);
+      //int eb = Integer.parseInt(targetCompany);
+      //System.out.println(eb);
+      try {
+        int entrepriseCiblé = Integer.parseInt(targetCompany);
+        filteredTodos = setLimit(filteredTodos, entrepriseCiblé);
+      }
+      catch (NumberFormatException e) {
+        throw new BadRequestResponse("Specified age '" + targetCompany + "' can't be parsed to an integer");
+      }
     }
       return filteredTodos;
     }
