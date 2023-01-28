@@ -25,6 +25,21 @@ public class TodoDatabase{
     // returns all todos
     public Todo[] listTodos(Map<String, List<String>> queryParams){
       Todo[] filteredTodos = allTodos;
+    if (queryParams.containsKey("status")){
+      //filter by status
+      List<String> givenStatus = queryParams.get("status");
+        //checks what was given as a query and converts into the corresponding boolean
+        //then filters by status
+        if (givenStatus.contains("complete")) { 
+          boolean targetStatus = true; 
+          filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
+        }
+
+        else {
+          boolean targetStatus = false; 
+          filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
+        } 
+    }
     // Set limit if desired
     if (queryParams.containsKey("limit")) {
       String targetCompany = queryParams.get("limit").get(0);
@@ -48,4 +63,14 @@ public class TodoDatabase{
       }
       return Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
     }
-}
+
+    public Todo[] filterTodoByStatus(Todo[] todos, boolean givenStatus) {
+      return Arrays.stream(todos).filter(x -> x.status == givenStatus).toArray(Todo[]::new);
+    }
+/* 
+    public void convertStatusToBoolean (queryParams) {
+      if (queryParams.containsKey("complete"))
+    }*/
+
+    
+  } 
