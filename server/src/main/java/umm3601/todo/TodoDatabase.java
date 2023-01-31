@@ -30,23 +30,28 @@ public class TodoDatabase{
       List<String> givenStatus = queryParams.get("status");
         //checks what was given as a query and converts into the corresponding boolean
         //then filters by status
-        if (givenStatus.contains("complete")) { 
-          boolean targetStatus = true; 
+        if (givenStatus.contains("complete")) {
+          boolean targetStatus = true;
           filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
         }
 
         else {
-          boolean targetStatus = false; 
+          boolean targetStatus = false;
           filteredTodos = filterTodoByStatus(filteredTodos, targetStatus);
-        } 
+        }
     }
     //filtering by todos bodies which contain a given string
     if (queryParams.containsKey("body")){
       String givenString = queryParams.get("body").get(0);
         filteredTodos = filterTodoByBody(filteredTodos, givenString);
     }
-      
-    
+
+    //filters by category which is represented as a string
+    if (queryParams.containsKey("category")){
+      String givenString = queryParams.get("category").get(0);
+        filteredTodos = filterTodoByCategory(filteredTodos, givenString);
+    }
+
     // Set limit if desired
     if (queryParams.containsKey("limit")) {
       String targetCompany = queryParams.get("limit").get(0);
@@ -64,10 +69,6 @@ public class TodoDatabase{
     }
 
     public Todo[] setLimit(Todo[] currentList, int limit){
-      Todo[] bruh = Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
-      for (int i = 0; i < limit; i++){
-        System.out.println(bruh[i]);
-      }
       return Arrays.stream(currentList, 0, limit).toArray(Todo[]::new);
     }
 
@@ -75,8 +76,12 @@ public class TodoDatabase{
       return Arrays.stream(todos).filter(x -> x.status == givenStatus).toArray(Todo[]::new);
     }
 
+    public Todo[] filterTodoByCategory(Todo[] todos, String givenCat) {
+      return Arrays.stream(todos).filter(x -> x.category.contains(givenCat)).toArray(Todo[]::new);
+    }
+
     public Todo[] filterTodoByBody(Todo[] todos, String givenString) {
       return Arrays.stream(todos).filter(x -> x.body.contains(givenString)).toArray(Todo[]::new);
     }
-    
-  } 
+
+  }
