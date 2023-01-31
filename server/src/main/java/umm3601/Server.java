@@ -65,6 +65,9 @@ public class Server {
 
     //Sort by bodies containing a string
     server.get("/api/todos/{body}", TodoController::getTodos);
+
+    //Sort by bodies containing a string
+    server.get("/api/todos/{category}", TodoController::getTodos);
   }
 
   /***
