@@ -17,6 +17,10 @@ public class TodoDatabase {
     private static Comparator<Todo> compByStatus;
     private static Comparator<Todo> compByCategory;
 
+    public int size() {
+    return allTodos.length;
+  }
+
     public TodoDatabase(String todoDataFile) throws IOException {
         InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(todoDataFile));
         ObjectMapper objectMapper = new ObjectMapper();
