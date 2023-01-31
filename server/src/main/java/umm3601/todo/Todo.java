@@ -8,5 +8,5 @@ public class Todo {
     public Boolean status;
     public String body;
     public String category;
-
 }
+

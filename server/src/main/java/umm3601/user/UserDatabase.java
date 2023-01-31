@@ -85,9 +85,7 @@ public class UserDatabase {
 
   /**
    * Get an array of all the users having the target company.
-   *
-   * @param users         the list of users to filter by company 
-   *         company
+   * @param users the list of users to filter by company
    */
   public User[] filterUsersByCompany(User[] users, String targetCompany) {
     return Arrays.stream(users).filter(x -> x.company.equals(targetCompany)).toArray(User[]::new);

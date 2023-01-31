@@ -4,10 +4,10 @@ import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 import io.javalin.http.NotFoundResponse;
 
-public class TodoController{
+public class TodoController {
     private TodoDatabase database;
 
-    public TodoController(TodoDatabase db){
+    public TodoController(TodoDatabase db) {
         this.database = db;
     }
 
