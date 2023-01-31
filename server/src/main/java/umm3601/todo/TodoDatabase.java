@@ -52,6 +52,12 @@ public class TodoDatabase{
         filteredTodos = filterTodoByCategory(filteredTodos, givenString);
     }
 
+    //filters by category which is represented as a string
+    if (queryParams.containsKey("owner")){
+      String givenString = queryParams.get("owner").get(0);
+        filteredTodos = filterTodoByOwner(filteredTodos, givenString);
+    }
+
     // Set limit if desired
     if (queryParams.containsKey("limit")) {
       String targetCompany = queryParams.get("limit").get(0);
@@ -78,6 +84,10 @@ public class TodoDatabase{
 
     public Todo[] filterTodoByCategory(Todo[] todos, String givenCat) {
       return Arrays.stream(todos).filter(x -> x.category.contains(givenCat)).toArray(Todo[]::new);
+    }
+
+    public Todo[] filterTodoByOwner(Todo[] todos, String givenOwner) {
+      return Arrays.stream(todos).filter(x -> x.owner.contains(givenOwner)).toArray(Todo[]::new);
     }
 
     public Todo[] filterTodoByBody(Todo[] todos, String givenString) {
