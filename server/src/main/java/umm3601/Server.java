@@ -1,16 +1,13 @@
 package umm3601;
 
 import java.io.IOException;
-
-import org.eclipse.jetty.util.IO;
-
 import io.javalin.Javalin;
 import io.javalin.plugin.bundled.RouteOverviewPlugin;
 import io.javalin.http.staticfiles.Location;
 import umm3601.user.UserDatabase;
-import umm3601.todo.*;
+import umm3601.todo.TodoController;
+import umm3601.todo.TodoDatabase;
 import umm3601.user.UserController;
-
 
 public class Server {
 
@@ -25,7 +22,7 @@ public class Server {
 
     // Initialize dependencies
     UserController userController = buildUserController();
-    TodoController TodoController = buildTodoController();
+    TodoController todoController = buildTodoController();
 
     Javalin server = Javalin.create(config -> {
       // This tells the server where to look for static files,
@@ -54,23 +51,26 @@ public class Server {
     server.get("/api/users", userController::getUsers);
 
     //List Todos
-    server.get("/api/todos", TodoController::getTodos);
+    server.get("/api/todos", todoController::getTodos);
 
     //Get specific todo
-    server.get("/api/todos/{id}", TodoController::getTodo);
-    server.get("/api/todos?&limit={limit}", TodoController::getTodos);
+    server.get("/api/todos/{id}", todoController::getTodo);
+    server.get("/api/todos?&limit={limit}", todoController::getTodos);
 
     //Sort by Status
-    server.get("/api/todos/{status}", TodoController::getTodos);
+    server.get("/api/todos/{status}", todoController::getTodos);
 
     //Sort by bodies containing a string
-    server.get("/api/todos/{body}", TodoController::getTodos);
+    server.get("/api/todos/{body}", todoController::getTodos);
 
     //Sort by bodies containing a string
-    server.get("/api/todos/{category}", TodoController::getTodos);
+    server.get("/api/todos/{category}", todoController::getTodos);
 
     //Sort by bodies containing a string
-    server.get("/api/todos/{owner}", TodoController::getTodos);
+    server.get("/api/todos/{owner}", todoController::getTodos);
+
+    //Order the todos by the selected field
+    server.get("/api/todos/{orderBy}", todoController::getTodos);
   }
 
   /***
@@ -98,10 +98,10 @@ public class Server {
     return userController;
   }
 
-  private static TodoController buildTodoController(){
+  private static TodoController buildTodoController() {
     TodoController todoController = null;
 
-    try{
+    try {
       todoDatabase = new TodoDatabase(TODO_DATA_FILE);
       todoController = new TodoController(todoDatabase);
     } catch (IOException e) {
